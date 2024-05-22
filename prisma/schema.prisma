@@ -1,0 +1,42 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("MYSQL_URL")
+}
+
+model Users {
+    id Int @id @default(autoincrement())
+    wallet_address String
+    account_balance Float? @default(0)
+    is_old_user Boolean @default(false)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Games {
+    id Int @id @default(autoincrement())
+    current_height Float? @default(0)
+    max_supply Int? @default(10000000)
+    mint_price Int? @default(0)
+    total_mints Int? @default(0)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Mints {
+    id Int @id @default(autoincrement())
+    user_id Int
+    wallet_address String
+    game_id Int
+    quantity Int @default(1)
+    total_price Float @default(0)
+    transaction_hash String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
